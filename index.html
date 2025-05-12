@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>სანდრო და ლიზა ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: #f2f2f2;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 500px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 2;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+
+      input,
+      textarea,
+      button,
+      select {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        margin-top: 20px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .money {
+        position: fixed;
+        font-size: 24px;
+        animation: fly-random 2.5s ease-out forwards;
+        pointer-events: none;
+        opacity: 0.9;
+      }
+
+      @keyframes fly-random {
+        0% {
+          transform: translate(0, 0) rotate(0deg) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--x), var(--y)) rotate(720deg) scale(1.5);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>გამარჯობა სანდრო და ლიზა ❤️</h1>
+      <form id="contact-form">
+        <label for="bank">ანგარიშის მფლობელი:</label>
+        <select name="account_owner" id="owner" required>
+          <option value="">-- ანგარიშის მფლობელი --</option>
+          <option value="სანდრო">სანდრო</option>
+          <option value="ლიზა">ლიზა</option>
+        </select>
+
+        <label for="bank">Bank Account Number:</label>
+        <input
+          type="text"
+          name="bank_account"
+          id="bank"
+          placeholder="e.g. GE12345678910"
+          required
+        />
+
+        <label for="bank">ბანკი:</label>
+        <input
+          type="text"
+          name="bank_name"
+          id="bankname"
+          placeholder="(TBC, BOG, etc.)"
+          required
+        />
+
+        <label for="currency">ანგარიშის ვალუტა:</label>
+        <select name="currency" id="currency" required>
+          <option value="">-- ვალუტა --</option>
+          <option value="ლარი">GEL</option>
+          <option value="დოლარი">USD</option>
+          <option value="ევრო">EUR</option>
+          <option value="უნივერსალური">უნივერსალური</option>
+        </select>
+
+        <button type="submit">გაგზავნა</button>
+      </form>
+    </div>
+
+    <div
+      id="money-container"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      "
+    ></div>
+
+    <script>
+      (function () {
+        emailjs.init("vhpmgrlSDUBKS5tLZ");
+      })();
+
+      document
+        .getElementById("contact-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          emailjs.sendForm("service_t8blc7h", "template_f8nv21d", this).then(
+            function () {
+              showFlyingMoney();
+
+              setTimeout(() => {
+                alert(
+                  "თანხა გამოიგზავნა წარმატებით და უახლოეს 3 საათში დაჯდება ანგარიშზე! 💸"
+                );
+                document.getElementById("contact-form").reset();
+              }, 2500);
+            },
+            function (error) {
+              alert(
+                "სამწუხაროდ მესიჯი ვერ გაიგზავნა, ვოცაპზე მომწერეთ მაშინ რომ ვერ გამოიგზავნა :( : " +
+                  JSON.stringify(error)
+              );
+            }
+          );
+        });
+
+      function showFlyingMoney() {
+        const container = document.getElementById("money-container");
+
+        for (let i = 0; i < 50; i++) {
+          const money = document.createElement("div");
+          money.className = "money";
+          money.innerText = "💸";
+
+          const startX = Math.random() * window.innerWidth;
+          const startY = Math.random() * window.innerHeight;
+          const dx = (Math.random() - 0.5) * 800;
+          const dy = (Math.random() - 0.5) * 800;
+
+          money.style.left = `${startX}px`;
+          money.style.top = `${startY}px`;
+          money.style.setProperty("--x", `${dx}px`);
+          money.style.setProperty("--y", `${dy}px`);
+          money.style.fontSize = `${Math.random() * 20 + 24}px`;
+
+          container.appendChild(money);
+
+          setTimeout(() => {
+            container.removeChild(money);
+          }, 2500);
+        }
+      }
+    </script>
+  </body>
+</html>
