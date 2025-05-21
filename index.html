@@ -3,9 +3,10 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>სანდრო და ლიზა ❤️</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom/dist/panzoom.min.js"></script>
   <style>
     html,
     body {
@@ -17,25 +18,41 @@
       font-family: Arial, sans-serif;
     }
 
-    body {
-      background-image: url('pictures/merged.png');
-      background-size: cover;
-      /* Resizes image to always cover both horizontally and vertically */
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-color: black;
-      /* fallback */
-      filter: brightness(0.85) contrast(1.1);
+    #background-wrapper {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      touch-action: none;
+    }
+
+    #zoom-container {
+      width: 100%;
+      height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
+    #zoom-container img {
+      max-width: none;
+      width: auto;
+      height: auto;
+      display: block;
+      user-select: none;
+      touch-action: none;
+    }
+
     .container {
-      max-width: 500px;
-      width: 90%;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 30px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 420px;
+      width: 85%;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       z-index: 2;
@@ -43,7 +60,8 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
+      font-size: 22px;
     }
 
     input,
@@ -51,12 +69,12 @@
     button,
     select {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
       box-sizing: border-box;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     button {
@@ -93,6 +111,14 @@
 </head>
 
 <body>
+  <!-- Background Zoomable Wrapper -->
+  <div id="background-wrapper">
+    <div id="zoom-container">
+      <img src="pictures/merged.png" id="zoom-image" alt="Background" />
+    </div>
+  </div>
+
+  <!-- Centered Form Container -->
   <div class="container">
     <h1>გამარჯობა სანდრო და ლიზა ❤️</h1>
     <form id="contact-form">
@@ -180,6 +206,18 @@
         }, 2500);
       }
     }
+
+    // Enable Panzoom on the image
+    const panzoomElem = document.getElementById('zoom-container');
+    const panzoom = Panzoom(panzoomElem, {
+      maxScale: 4,
+      minScale: 1,
+      contain: 'outside',
+      startScale: 1
+    });
+
+    // Bind mouse wheel + touchpad zoom
+    panzoomElem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
   </script>
 </body>
 
