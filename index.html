@@ -18,30 +18,114 @@
       font-family: Arial, sans-serif;
     }
 
-    #background-wrapper {
-      position: absolute;
+    #drag-hint {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
       width: 100%;
       height: 100%;
-      overflow: hidden;
-      z-index: 0;
-      touch-action: none;
-    }
-
-    #zoom-container {
-      width: 100%;
-      height: 100%;
+      pointer-events: none;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
+      opacity: 1;
+      transition: opacity 0.8s ease;
     }
 
-    #zoom-container img {
-      max-width: none;
-      width: auto;
-      height: auto;
-      display: block;
-      user-select: none;
+    .arrow {
+      font-size: 60px;
+      color: #ff0000;
+      opacity: 0.8;
+      animation: float 2s ease-in-out infinite;
+      margin: 4px;
+    }
+
+    .drag-text {
+      margin-top: 0px;
+      font-size: 45px;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px 12px;
+      border-radius: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 0.7;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.7;
+      }
+    }
+
+    #drag-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #background-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
       touch-action: none;
+      z-index: 0;
+    }
+
+    #zoom-container {
+      width: 300vw;
+      height: 300vh;
+      background-image: url('pictures/merged.png');
+      background-repeat: repeat;
+      background-size: 50%;
+      background-position: top left;
+      filter: brightness(0.75) contrast(1.4);
+      opacity: 0.95;
+    }
+
+    .container.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .container.visible {
+      animation: fadeInForm 1.5s ease forwards;
+    }
+
+    @keyframes fadeInForm {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.95);
+      }
+
+      100% {
+        opacity: 0.95;
+        transform: translate(-50%, -50%) scale(1);
+      }
     }
 
     .container {
@@ -50,8 +134,8 @@
       left: 50%;
       transform: translate(-50%, -50%);
       max-width: 420px;
-      width: 85%;
-      background: rgba(255, 255, 255, 0.85);
+      width: 50%;
+      background: #F7E6CA;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -67,14 +151,15 @@
     input,
     textarea,
     button,
-    select {
+    select,
+    label {
+      font-size: 12px;
       width: 100%;
       padding: 10px;
       margin-top: 10px;
-      border: 1px solid #ccc;
+      border: 0px solid #ccc;
       border-radius: 6px;
       box-sizing: border-box;
-      font-size: 15px;
     }
 
     button {
@@ -107,19 +192,64 @@
         opacity: 0;
       }
     }
+
+    #heart-reveal {
+      position: fixed;
+      top: 50%;
+      left: -100px;
+      font-size: 100px;
+      cursor: pointer;
+      z-index: 5;
+      animation: flyInHeart 3s ease-out forwards;
+      transition: opacity 0.5s ease;
+      pointer-events: auto;
+    }
+
+    #heart-reveal.hidden {
+      display: none;
+      opacity: 0;
+    }
+
+    @keyframes flyInHeart {
+      0% {
+        transform: translate(-100px, 0) rotate(0deg) scale(0.5);
+        opacity: 0;
+      }
+
+      50% {
+        transform: translate(30vw, -30vh) rotate(180deg) scale(1.2);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(360deg);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Background Zoomable Wrapper -->
   <div id="background-wrapper">
-    <div id="zoom-container">
-      <img src="pictures/merged.png" id="zoom-image" alt="Background" />
-    </div>
+    <div id="zoom-container"></div>
   </div>
 
-  <!-- Centered Form Container -->
-  <div class="container">
+  <!-- Drag arrows and prompt -->
+  <div id="drag-hint">
+    <div class="arrow arrow-up">⬆</div>
+    <div class="arrow arrow-right">➡</div>
+    <div class="arrow arrow-down">⬇</div>
+    <div class="arrow arrow-left">⬅</div>
+    <div class="drag-text">Move around 🤏💫</div>
+  </div>
+
+  <div id="heart-reveal" class="hidden">❤️</div>
+
+  <!-- Form container initially hidden -->
+  <div class="container hidden" id="form-container">
     <h1>გამარჯობა სანდრო და ლიზა ❤️</h1>
     <form id="contact-form">
       <label for="owner">ანგარიშის მფლობელი:</label>
@@ -207,7 +337,7 @@
       }
     }
 
-    // Enable Panzoom on the image
+    // Enable Panzoom
     const panzoomElem = document.getElementById('zoom-container');
     const panzoom = Panzoom(panzoomElem, {
       maxScale: 4,
@@ -216,8 +346,42 @@
       startScale: 1
     });
 
-    // Bind mouse wheel + touchpad zoom
+    // Center initial view
+    panzoom.pan(-window.innerWidth, -window.innerHeight);
+
     panzoomElem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+
+    let hintVisible = true;
+    const dragHint = document.getElementById('drag-hint');
+    const formContainer = document.getElementById('form-container');
+    const heart = document.getElementById('heart-reveal');
+
+    function onUserInteraction() {
+      if (hintVisible) {
+        hintVisible = false;
+        dragHint.classList.add('hidden');
+
+        // Show heart after 2 seconds
+        setTimeout(() => {
+          heart.classList.remove('hidden');
+        }, 4000);
+      }
+    }
+
+    heart.addEventListener('click', () => {
+      heart.classList.add('hidden');
+
+      setTimeout(() => {
+        formContainer.classList.remove('hidden');
+        formContainer.classList.add('visible');
+      }, 500); // small delay for better visual transition
+    });
+
+
+    // Detect any gesture
+    panzoomElem.addEventListener('pointerdown', onUserInteraction);
+    panzoomElem.addEventListener('wheel', onUserInteraction);
+    panzoomElem.addEventListener('touchstart', onUserInteraction);
   </script>
 </body>
 
