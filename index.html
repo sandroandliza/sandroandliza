@@ -18,6 +18,11 @@
       font-family: Arial, sans-serif;
     }
 
+    p {
+      white-space: pre-line;
+    }
+
+
     @keyframes beat {
 
       0%,
@@ -30,12 +35,9 @@
       }
     }
 
-
-
     #heart-inner.beating {
       animation: beat 1.5s infinite;
     }
-
 
     #click-message {
       position: fixed;
@@ -120,6 +122,18 @@
       }
     }
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
     #drag-hint.hidden {
       opacity: 0;
       pointer-events: none;
@@ -173,13 +187,38 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 420px;
-      width: 50%;
+      max-width: 580px;
+      width: 60%;
       background: #F7E6CA;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
       z-index: 2;
+    }
+
+    .form-page {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .form-page.page-visible {
+      display: block;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .nav-buttons button {
+      background-color: #4caf50;
+      color: white;
+      font-size: 14px;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
     h1 {
@@ -200,13 +239,6 @@
       border: 0px solid #ccc;
       border-radius: 6px;
       box-sizing: border-box;
-    }
-
-    button {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      margin-top: 20px;
     }
 
     button:hover {
@@ -296,57 +328,68 @@
   <div id="click-message" class="hidden">Click on me!</div>
 
   <div class="container hidden" id="form-container">
-    <h1>გამარჯობა სანდრო და ლიზა ❤️</h1>
-    <form id="contact-form">
-      <label for="owner">ანგარიშის მფლობელი:</label>
-      <select name="account_owner" id="owner" required>
-        <option value="">-- ანგარიშის მფლობელი --</option>
-        <option value="სანდრო">სანდრო</option>
-        <option value="ლიზა">ლიზა</option>
-      </select>
+    <div class="form-page page-visible" id="page-1">
+      <h1>სანდრო და ლიზა ❤️</h1>
+      <p style="font-size: 16px">გილოცავთ გასაოცარ ულამაზეს თქვენ დღეს! <br>
+        2025 წლის 1 ივნისიდან, თქვენ უკვე ოფიციალურად ცოლ-ქმარი ხართ 💍. ამ დღიდან თქვენთვის ახალი გზა დაიწყო — და ეს
+        გზა სავსეა
+        სინათლით, სითბოთი, ჯამრთელობით, სიმდიდრით და საოცარი თავგადასავლებით. სიტყვა მეუღლე უღლიდან მოდის,
+        ცხოვრება როგორც დაუხნელი მიწა ისეა,
+        როგორც ერთმანეთის მეუღლეებმა საერთო მოვალეობა და ვალდებულებაა ამ მიწაზე მუშაობა.
 
-      <label for="bank">Bank Account Number:</label>
-      <input type="text" name="bank_account" id="bank" placeholder="e.g. GE12345678910" required />
-
-      <label for="bankname">ბანკი:</label>
-      <input type="text" name="bank_name" id="bankname" placeholder="(TBC, BOG, etc.)" required />
-
-      <label for="currency">ანგარიშის ვალუტა:</label>
-      <select name="currency" id="currency" required>
-        <option value="">-- ვალუტა --</option>
-        <option value="ლარი">GEL</option>
-        <option value="დოლარი">USD</option>
-        <option value="ევრო">EUR</option>
-        <option value="უნივერსალური">უნივერსალური</option>
-      </select>
-
-      <button type="submit">გაგზავნა</button>
-    </form>
+        გისურვებთ სიყვარულით სავსე გრძელ ცხოვრებას! 💍❤️</p>
+    </div>
+    <div class="form-page" id="page-2">
+      <h1>შუალედური გვერდი 🥰</h1>
+      <p style="font-size: 16px">აქ შეიძლება მოკლე ისტორია, ფოტო ან შეტყობინება ✨</p>
+    </div>
+    <div class="form-page" id="page-3">
+      <h1>შეიყვანეთ დეტალები 💸</h1>
+      <form id="contact-form">
+        <label for="owner">ანგარიშის მფლობელი:</label>
+        <select name="account_owner" id="owner" required>
+          <option value="">-- ანგარიშის მფლობელი --</option>
+          <option value="სანდრო">სანდრო</option>
+          <option value="ლიზა">ლიზა</option>
+        </select>
+        <label for="bank">ანგარიშის ნომერი:</label>
+        <input type="text" name="bank_account" id="bank" required />
+        <label for="bankname">ბანკი:</label>
+        <input type="text" name="bank_name" id="bankname" required />
+        <label for="currency">ვალუტა:</label>
+        <select name="currency" id="currency" required>
+          <option value="">-- ვალუტა --</option>
+          <option value="ლარი">GEL</option>
+          <option value="დოლარი">USD</option>
+          <option value="ევრო">EUR</option>
+          <option value="უნივერსალური">უნივერსალური</option>
+        </select>
+        <button type="submit">გაგზავნა</button>
+      </form>
+    </div>
+    <div class="nav-buttons">
+      <button id="prev-page" style="display:none">⬅</button>
+      <button id="next-page">➡</button>
+    </div>
   </div>
 
   <div id="money-container"
     style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></div>
 
   <script>
-    (function () {
-      emailjs.init("vhpmgrlSDUBKS5tLZ");
-    })();
+    emailjs.init("vhpmgrlSDUBKS5tLZ");
 
     document.getElementById("contact-form").addEventListener("submit", function (e) {
       e.preventDefault();
-
-      emailjs.sendForm("service_t8blc7h", "template_f8nv21d", this).then(
-        function () {
-          showFlyingMoney();
-          setTimeout(() => {
-            alert("თანხა გამოიგზავნა წარმატებით და უახლოეს 3 საათში დაჯდება ანგარიშზე! 💸");
-            document.getElementById("contact-form").reset();
-          }, 2500);
-        },
-        function (error) {
-          alert("სამწუხაროდ მესიჯი ვერ გაიგზავნა, ვოცაპზე მომწერეთ მაშინ რომ ვერ გამოიგზავნა :( : " + JSON.stringify(error));
-        }
-      );
+      emailjs.sendForm("service_t8blc7h", "template_f8nv21d", this).then(() => {
+        showFlyingMoney();
+        setTimeout(() => {
+          alert("თანხა გამოიგზავნა წარმატებით და უახლოეს 3 საათში დაჯდება ანგარიშზე! 💸");
+          document.getElementById("contact-form").reset();
+        }, 2500);
+      }, error => {
+        alert("სამწუხაროდ მესიჯი ვერ გაიგზავნა :( " + JSON.stringify(error));
+      });
     });
 
     function showFlyingMoney() {
@@ -355,14 +398,10 @@
         const money = document.createElement("div");
         money.className = "money";
         money.innerText = "💸";
-        const startX = Math.random() * window.innerWidth;
-        const startY = Math.random() * window.innerHeight;
-        const dx = (Math.random() - 0.5) * 800;
-        const dy = (Math.random() - 0.5) * 800;
-        money.style.left = `${startX}px`;
-        money.style.top = `${startY}px`;
-        money.style.setProperty("--x", `${dx}px`);
-        money.style.setProperty("--y", `${dy}px`);
+        money.style.left = `${Math.random() * window.innerWidth}px`;
+        money.style.top = `${Math.random() * window.innerHeight}px`;
+        money.style.setProperty("--x", `${(Math.random() - 0.5) * 800}px`);
+        money.style.setProperty("--y", `${(Math.random() - 0.5) * 800}px`);
         money.style.fontSize = `${Math.random() * 20 + 24}px`;
         container.appendChild(money);
         setTimeout(() => container.removeChild(money), 2500);
@@ -370,49 +409,85 @@
     }
 
     const panzoomElem = document.getElementById('zoom-container');
-    const panzoom = Panzoom(panzoomElem, {
-      maxScale: 4,
-      minScale: 1,
-      contain: 'outside',
-      startScale: 1
-    });
+    const panzoom = Panzoom(panzoomElem, { maxScale: 4, minScale: 1, contain: 'outside', startScale: 1 });
     panzoom.pan(-window.innerWidth, -window.innerHeight);
     panzoomElem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
 
     const dragHint = document.getElementById('drag-hint');
-    const formContainer = document.getElementById('form-container');
     const heart = document.getElementById('heart-reveal');
     const heartInner = document.getElementById('heart-inner');
     const clickMessage = document.getElementById('click-message');
-    let hintVisible = true;
+    const formContainer = document.getElementById('form-container');
+
+    let currentPage = 0;
+    const totalPages = 3;
+    const pages = [
+      document.getElementById("page-1"),
+      document.getElementById("page-2"),
+      document.getElementById("page-3")
+    ];
+    const prevBtn = document.getElementById("prev-page");
+    const nextBtn = document.getElementById("next-page");
+
+    function showPage(index) {
+      pages.forEach((p, i) => {
+        p.classList.toggle("page-visible", i === index);
+      });
+      prevBtn.style.display = index === 0 ? "none" : "inline-block";
+      nextBtn.style.display = index === totalPages - 1 ? "none" : "inline-block";
+    }
+
+    showPage(currentPage);
+
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 0) {
+        currentPage--;
+        showPage(currentPage);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        showPage(currentPage);
+      }
+    });
 
     function onUserInteraction() {
-      if (hintVisible) {
-        hintVisible = false;
-        dragHint.classList.add('hidden');
+      dragHint.classList.add('hidden');
+      setTimeout(() => {
+        heart.classList.remove('hidden');
+        heart.addEventListener('animationend', () => {
+          // Remove animation safely WITHOUT losing position
+          heart.style.animation = '';
+          heart.classList.remove('hidden'); // just in case
+          heart.style.left = '50%';
+          heart.style.top = '50%';
+          heart.style.transform = 'translate(-50%, -50%) rotate(360deg)';
 
-        setTimeout(() => {
-          heart.classList.remove('hidden');
+          heartInner.classList.add('beating');
 
-          heart.addEventListener('animationend', () => {
-            heartInner.classList.add('beating');
-            setTimeout(() => {
-              clickMessage.classList.remove('hidden');
-              clickMessage.classList.add('visible');
-            }, 2000);
-          }, { once: true });
+          setTimeout(() => {
+            clickMessage.classList.remove('hidden');
+            clickMessage.classList.add('visible');
+          }, 2000);
+        }, { once: true });
 
-        }, 4000);
-      }
+
+      }, 4000);
     }
 
     heart.addEventListener('click', () => {
       heart.classList.add('hidden');
       clickMessage.classList.remove('visible');
+
       setTimeout(() => {
+        clickMessage.classList.add('hidden'); // 💡 hide it completely
         formContainer.classList.remove('hidden');
         formContainer.classList.add('visible');
+        showPage(currentPage = 0);
       }, 500);
+
     });
 
     panzoomElem.addEventListener('pointerdown', onUserInteraction);
