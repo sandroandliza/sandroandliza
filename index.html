@@ -18,6 +18,46 @@
       font-family: Arial, sans-serif;
     }
 
+    @keyframes beat {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+    }
+
+
+
+    #heart-inner.beating {
+      animation: beat 1.5s infinite;
+    }
+
+
+    #click-message {
+      position: fixed;
+      top: calc(50% + 80px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      z-index: 6;
+    }
+
+    #click-message.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     #drag-hint {
       position: fixed;
       top: 0;
@@ -210,6 +250,14 @@
       opacity: 0;
     }
 
+    #heart-inner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+    }
+
     @keyframes flyInHeart {
       0% {
         transform: translate(-100px, 0) rotate(0deg) scale(0.5);
@@ -222,11 +270,10 @@
       }
 
       100% {
-        transform: translate(0, 0) rotate(360deg) scale(1);
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%) rotate(360deg);
         opacity: 1;
+        transform: translate(-50%, -50%) rotate(360deg);
       }
     }
   </style>
@@ -237,7 +284,6 @@
     <div id="zoom-container"></div>
   </div>
 
-  <!-- Drag arrows and prompt -->
   <div id="drag-hint">
     <div class="arrow arrow-up">⬆</div>
     <div class="arrow arrow-right">➡</div>
@@ -246,9 +292,9 @@
     <div class="drag-text">Move around 🤏💫</div>
   </div>
 
-  <div id="heart-reveal" class="hidden">❤️</div>
+  <div id="heart-reveal" class="hidden"><span id="heart-inner">❤️</span></div>
+  <div id="click-message" class="hidden">Click on me!</div>
 
-  <!-- Form container initially hidden -->
   <div class="container hidden" id="form-container">
     <h1>გამარჯობა სანდრო და ლიზა ❤️</h1>
     <form id="contact-form">
@@ -278,14 +324,8 @@
     </form>
   </div>
 
-  <div id="money-container" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;"></div>
+  <div id="money-container"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;"></div>
 
   <script>
     (function () {
@@ -298,7 +338,6 @@
       emailjs.sendForm("service_t8blc7h", "template_f8nv21d", this).then(
         function () {
           showFlyingMoney();
-
           setTimeout(() => {
             alert("თანხა გამოიგზავნა წარმატებით და უახლოეს 3 საათში დაჯდება ანგარიშზე! 💸");
             document.getElementById("contact-form").reset();
@@ -312,32 +351,24 @@
 
     function showFlyingMoney() {
       const container = document.getElementById("money-container");
-
       for (let i = 0; i < 50; i++) {
         const money = document.createElement("div");
         money.className = "money";
         money.innerText = "💸";
-
         const startX = Math.random() * window.innerWidth;
         const startY = Math.random() * window.innerHeight;
         const dx = (Math.random() - 0.5) * 800;
         const dy = (Math.random() - 0.5) * 800;
-
         money.style.left = `${startX}px`;
         money.style.top = `${startY}px`;
         money.style.setProperty("--x", `${dx}px`);
         money.style.setProperty("--y", `${dy}px`);
         money.style.fontSize = `${Math.random() * 20 + 24}px`;
-
         container.appendChild(money);
-
-        setTimeout(() => {
-          container.removeChild(money);
-        }, 2500);
+        setTimeout(() => container.removeChild(money), 2500);
       }
     }
 
-    // Enable Panzoom
     const panzoomElem = document.getElementById('zoom-container');
     const panzoom = Panzoom(panzoomElem, {
       maxScale: 4,
@@ -345,40 +376,45 @@
       contain: 'outside',
       startScale: 1
     });
-
-    // Center initial view
     panzoom.pan(-window.innerWidth, -window.innerHeight);
-
     panzoomElem.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
 
-    let hintVisible = true;
     const dragHint = document.getElementById('drag-hint');
     const formContainer = document.getElementById('form-container');
     const heart = document.getElementById('heart-reveal');
+    const heartInner = document.getElementById('heart-inner');
+    const clickMessage = document.getElementById('click-message');
+    let hintVisible = true;
 
     function onUserInteraction() {
       if (hintVisible) {
         hintVisible = false;
         dragHint.classList.add('hidden');
 
-        // Show heart after 2 seconds
         setTimeout(() => {
           heart.classList.remove('hidden');
+
+          heart.addEventListener('animationend', () => {
+            heartInner.classList.add('beating');
+            setTimeout(() => {
+              clickMessage.classList.remove('hidden');
+              clickMessage.classList.add('visible');
+            }, 2000);
+          }, { once: true });
+
         }, 4000);
       }
     }
 
     heart.addEventListener('click', () => {
       heart.classList.add('hidden');
-
+      clickMessage.classList.remove('visible');
       setTimeout(() => {
         formContainer.classList.remove('hidden');
         formContainer.classList.add('visible');
-      }, 500); // small delay for better visual transition
+      }, 500);
     });
 
-
-    // Detect any gesture
     panzoomElem.addEventListener('pointerdown', onUserInteraction);
     panzoomElem.addEventListener('wheel', onUserInteraction);
     panzoomElem.addEventListener('touchstart', onUserInteraction);
