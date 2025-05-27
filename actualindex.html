@@ -94,6 +94,25 @@
       animation: pulse 2s infinite;
     }
 
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+
     @keyframes float {
       0% {
         transform: translateY(0px);
@@ -345,30 +364,43 @@
     <div class="form-page" id="page-3">
       <h1>შეიყვანეთ დეტალები 💸</h1>
       <form id="contact-form">
-        <label for="owner">ანგარიშის მფლობელი:</label>
-        <select name="account_owner" id="owner" required>
-          <option value="">-- ანგარიშის მფლობელი --</option>
-          <option value="სანდრო">სანდრო</option>
-          <option value="ლიზა">ლიზა</option>
-        </select>
-        <label for="bank">ანგარიშის ნომერი (IBAN):</label>
-        <input type="text" name="bank_account" id="bank" required />
-        <label for="bankname">ბანკი:</label>
-        <input type="text" name="bank_name" id="bankname" required />
-        <label for="currency">ვალუტა:</label>
-        <select name="currency" id="currency" required>
-          <option value="">-- ვალუტა --</option>
-          <option value="ლარი">GEL</option>
-          <option value="დოლარი">USD</option>
-          <option value="ევრო">EUR</option>
-          <option value="უნივერსალური">უნივერსალური</option>
-        </select>
+
+        <div class="form-group">
+          <label for="owner">ანგარიშის მფლობელი:</label>
+          <select name="account_owner" id="owner" required>
+            <option value="">-- ანგარიშის მფლობელი --</option>
+            <option value="სანდრო">სანდრო</option>
+            <option value="ლიზა">ლიზა</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="bank">ანგარიშის ნომერი (IBAN):</label>
+          <input type="text" name="bank_account" id="bank" required />
+        </div>
+
+        <div class="form-group">
+          <label for="bankname">ბანკი:</label>
+          <input type="text" name="bank_name" id="bankname" required />
+        </div>
+
+        <div class="form-group">
+          <label for="currency">ვალუტა:</label>
+          <select name="currency" id="currency" required>
+            <option value="ლარი">GEL</option>
+            <option value="დოლარი">USD</option>
+            <option value="ევრო">EUR</option>
+            <option value="უნივერსალური">უნივერსალური</option>
+          </select>
+        </div>
+
         <div style="display: flex; justify-content: center; margin-top: 20px;">
           <button type="submit"
             style="background-color: #4CAF50; font-style: italic; font-weight: bold; color: white; padding: 10px 20px; max-width: 50%; border: none; border-radius: 5px;">
             გაგზავნა!
           </button>
         </div>
+
       </form>
     </div>
     <div class="nav-buttons">
