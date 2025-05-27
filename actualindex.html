@@ -187,8 +187,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      max-width: 580px;
-      width: 60%;
+      max-width: 650px;
+      width: 70%;
       background: #F7E6CA;
       padding: 20px;
       border-radius: 10px;
@@ -212,7 +212,7 @@
     }
 
     .nav-buttons button {
-      background-color: #4caf50;
+      background-color: #344da0;
       color: white;
       font-size: 14px;
       border: none;
@@ -242,7 +242,7 @@
     }
 
     button:hover {
-      background-color: #45a049;
+      background-color: #344da0;
     }
 
     .money {
@@ -330,17 +330,16 @@
   <div class="container hidden" id="form-container">
     <div class="form-page page-visible" id="page-1">
       <h1>სანდრო და ლიზა ❤️</h1>
-      <p style="font-size: 16px">გილოცავთ გასაოცარ ულამაზეს თქვენ დღეს! <br>
-        2025 წლის 1 ივნისიდან, თქვენ უკვე ოფიციალურად ცოლ-ქმარი ხართ 💍. ამ დღიდან თქვენთვის ახალი გზა დაიწყო — და ეს
-        გზა სავსეა
-        სინათლით, სითბოთი, ჯამრთელობით, სიმდიდრით და საოცარი თავგადასავლებით. სიტყვა მეუღლე უღლიდან მოდის,
-        ცხოვრება როგორც დაუხნელი მიწა ისეა,
-        როგორც ერთმანეთის მეუღლეებმა საერთო მოვალეობა და ვალდებულებაა ამ მიწაზე მუშაობა.
-
-        გისურვებთ სიყვარულით სავსე გრძელ ცხოვრებას! 💍❤️</p>
+      <!-- beautify ignore:start -->
+      <p style="font-size: 16px">გილოცავთ გასაოცარ ულამაზეს დღეს! Gratulerer med bryllupet!<br>
+      2025 წლის 1 ივნისიდან, თქვენ უკვე ოფიციალურად ცოლ-ქმარი ხართ 🤵‍♂️💍👰‍♀️<br>
+      ამ დღიდან თქვენთვის ახალი გზა დაიწყო — და ეს გზა სავსეა სინათლით, სითბოთი, ჯამრთელობით, სიმდიდრით და საოცარი თავგადასავლებით.<br>
+      სიტყვა მეუღლე უღლიდან მოდის, ცხოვრება როგორც დაუხნელი მიწა ისეა, როგორც ერთმანეთის მეუღლეებმა საერთო მოვალეობა და ვალდებულებაა ამ მიწაზე მუშაობა. 🚜🌱🌾<br>
+      გისურვებთ სიყვარულით სავსე და ბედნიერ ხანგრძლივ ცხოვრებას! ❤️</p>
+      <!-- beautify ignore:end -->
     </div>
     <div class="form-page" id="page-2">
-      <h1>შუალედური გვერდი 🥰</h1>
+      <h1>ქორწილის საჩუქარი 🎁</h1>
       <p style="font-size: 16px">აქ შეიძლება მოკლე ისტორია, ფოტო ან შეტყობინება ✨</p>
     </div>
     <div class="form-page" id="page-3">
@@ -352,7 +351,7 @@
           <option value="სანდრო">სანდრო</option>
           <option value="ლიზა">ლიზა</option>
         </select>
-        <label for="bank">ანგარიშის ნომერი:</label>
+        <label for="bank">ანგარიშის ნომერი (IBAN):</label>
         <input type="text" name="bank_account" id="bank" required />
         <label for="bankname">ბანკი:</label>
         <input type="text" name="bank_name" id="bankname" required />
@@ -364,7 +363,12 @@
           <option value="ევრო">EUR</option>
           <option value="უნივერსალური">უნივერსალური</option>
         </select>
-        <button type="submit">გაგზავნა</button>
+        <div style="display: flex; justify-content: center; margin-top: 20px;">
+          <button type="submit"
+            style="background-color: #4CAF50; font-style: italic; font-weight: bold; color: white; padding: 10px 20px; max-width: 50%; border: none; border-radius: 5px;">
+            გაგზავნა!
+          </button>
+        </div>
       </form>
     </div>
     <div class="nav-buttons">
@@ -470,7 +474,7 @@
           setTimeout(() => {
             clickMessage.classList.remove('hidden');
             clickMessage.classList.add('visible');
-          }, 2000);
+          }, 150);
         }, { once: true });
 
 
