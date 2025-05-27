@@ -527,14 +527,20 @@
       }
     });
 
+    let heartAnimationPlayed = false;
+
     function onUserInteraction() {
       dragHint.classList.add('hidden');
+
+      // Only trigger the heart animation once
+      if (heartAnimationPlayed) return;
+      heartAnimationPlayed = true;
+
       setTimeout(() => {
         heart.classList.remove('hidden');
         heart.addEventListener('animationend', () => {
-          // Remove animation safely WITHOUT losing position
-          heart.style.animation = '';
-          heart.classList.remove('hidden'); // just in case
+          // Remove animation safely WITHOUT re-triggering on next click
+          heart.style.animation = 'none';
           heart.style.left = '50%';
           heart.style.top = '50%';
           heart.style.transform = 'translate(-50%, -50%) rotate(360deg)';
@@ -548,6 +554,7 @@
         }, { once: true });
       }, 4000);
     }
+
 
     heart.addEventListener('click', () => {
       heart.classList.add('hidden');
