@@ -368,7 +368,7 @@
         <div class="form-group">
           <label for="owner">ანგარიშის მფლობელი:</label>
           <select name="account_owner" id="owner" required>
-            <option value="">-- ანგარიშის მფლობელი --</option>
+            <option value="" disabled selected>-- ანგარიშის მფლობელი --</option>
             <option value="სანდრო">სანდრო</option>
             <option value="ლიზა">ლიზა</option>
           </select>
@@ -376,17 +376,18 @@
 
         <div class="form-group">
           <label for="bank">ანგარიშის ნომერი (IBAN):</label>
-          <input type="text" name="bank_account" id="bank" required />
+          <input type="text" name="bank_account" id="bank" placeholder="GE29TB1234567890123456" required />
         </div>
 
         <div class="form-group">
           <label for="bankname">ბანკი:</label>
-          <input type="text" name="bank_name" id="bankname" required />
+          <input type="text" name="bank_name" placeholder="TBC, BOG..." id="bankname" required />
         </div>
 
         <div class="form-group">
           <label for="currency">ვალუტა:</label>
           <select name="currency" id="currency" required>
+            <option value="" disabled selected>-- ვალუტა --</option>
             <option value="ლარი">GEL</option>
             <option value="დოლარი">USD</option>
             <option value="ევრო">EUR</option>
