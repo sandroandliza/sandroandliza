@@ -383,13 +383,50 @@
   <script>
     emailjs.init("vhpmgrlSDUBKS5tLZ");
 
-    document.getElementById("contact-form").addEventListener("submit", function (e) {
+    const moneyPage = document.getElementById("page-3");
+    const formEl = document.getElementById("contact-form");
+
+    // Show success if money_sent.txt contains true
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("money_sent.txt")
+        .then(res => res.text())
+        .then(text => {
+          const isSent = text.trim().toLowerCase() === "money_sent=true";
+          if (isSent) showSuccessMessage();
+        })
+        .catch(err => {
+          console.error("Could not read money_sent.txt", err);
+        });
+    });
+
+    formEl.addEventListener("submit", function (e) {
       e.preventDefault();
       emailjs.sendForm("service_t8blc7h", "template_f8nv21d", this).then(() => {
         showFlyingMoney();
         setTimeout(() => {
           alert("თანხა გამოიგზავნა წარმატებით და უახლოეს 3 საათში დაჯდება ანგარიშზე! 💸");
-          document.getElementById("contact-form").reset();
+          showSuccessMessage();
+        }, 2500);
+      }, error => {
+        alert("სამწუხაროდ მესიჯი ვერ გაიგზავნა :( " + JSON.stringify(error));
+      });
+    });
+
+    function showSuccessMessage() {
+      moneyPage.innerHTML = `
+      <h1>გაგზავნილია 💸</h1>
+      <p style="font-size: 18px; text-align: center;">საჩუქარი წარმატებით გაიგზავნა! ეს საიტი და QR კი სამახსოვრო სამუდამო საჩუქარია ❤️</p>
+    `;
+    }
+
+    formEl.addEventListener("submit", function (e) {
+      e.preventDefault();
+      emailjs.sendForm("service_t8blc7h", "template_f8nv21d", this).then(() => {
+        showFlyingMoney();
+        fetch("/money-status", { method: "POST" }); // Mark as sent
+        setTimeout(() => {
+          alert("თანხა გამოიგზავნა წარმატებით და უახლოეს 3 საათში დაჯდება ანგარიშზე! 💸");
+          showSuccessMessage(); // Update page
         }, 2500);
       }, error => {
         alert("სამწუხაროდ მესიჯი ვერ გაიგზავნა :( " + JSON.stringify(error));
@@ -476,8 +513,6 @@
             clickMessage.classList.add('visible');
           }, 150);
         }, { once: true });
-
-
       }, 4000);
     }
 
@@ -486,18 +521,18 @@
       clickMessage.classList.remove('visible');
 
       setTimeout(() => {
-        clickMessage.classList.add('hidden'); // 💡 hide it completely
+        clickMessage.classList.add('hidden');
         formContainer.classList.remove('hidden');
         formContainer.classList.add('visible');
         showPage(currentPage = 0);
       }, 500);
-
     });
 
     panzoomElem.addEventListener('pointerdown', onUserInteraction);
     panzoomElem.addEventListener('wheel', onUserInteraction);
     panzoomElem.addEventListener('touchstart', onUserInteraction);
   </script>
+
 </body>
 
 </html>
