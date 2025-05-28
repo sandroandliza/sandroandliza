@@ -444,19 +444,6 @@
           });
       });
 
-      formEl.addEventListener("submit", function (e) {
-        e.preventDefault();
-        emailjs.sendForm("service_t8blc7h", "template_f8nv21d", this).then(() => {
-          showFlyingMoney();
-          setTimeout(() => {
-            alert("თანხა გამოიგზავნა წარმატებით და უახლოეს 3 საათში დაჯდება ანგარიშზე! 💸");
-            showSuccessMessage();
-          }, 2500);
-        }, error => {
-          alert("სამწუხაროდ მესიჯი ვერ გაიგზავნა :( " + JSON.stringify(error));
-        });
-      });
-
       function showSuccessMessage() {
         moneyPage.innerHTML = `
       <h1>გაგზავნილია 💸</h1>
