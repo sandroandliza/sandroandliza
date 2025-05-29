@@ -22,6 +22,29 @@
       white-space: pre-line;
     }
 
+    .form-page {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+      scroll-behavior: smooth;
+
+      /* NEW: make it scrollable if content overflows */
+      max-height: 70vh;
+      overflow-y: auto;
+      padding-right: 10px;
+      /* space for scrollbar */
+
+    }
+
+    /* Optional: customize scrollbar on WebKit browsers */
+    .form-page::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .form-page::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+
 
     @keyframes beat {
 
@@ -228,7 +251,11 @@
       display: flex;
       justify-content: space-between;
       margin-top: 15px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      /* optional */
+      padding-top: 10px;
     }
+
 
     .nav-buttons button {
       background-color: #344da0;
