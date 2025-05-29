@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>სანდრო და ლიზა ❤️</title>
+  <link rel="icon" href="pictures/heart.png" type="image/png">
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom/dist/panzoom.min.js"></script>
   <style>
@@ -354,6 +355,20 @@
         transform: translate(-50%, -50%) rotate(360deg);
       }
     }
+
+    .tooltip-arrow {
+      position: absolute;
+      bottom: 100%;
+      /* position above the box */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 10px solid rgba(0, 0, 0, 0.75);
+      /* match box color */
+    }
   </style>
 </head>
 
@@ -371,7 +386,11 @@
   </div>
 
   <div id="heart-reveal" class="hidden"><span id="heart-inner">❤️</span></div>
-  <div id="click-message" class="hidden">Click on me!</div>
+  <div id="click-message" class="hidden">
+    Click on me!
+    <div class="tooltip-arrow"></div>
+  </div>
+
 
   <div class="container hidden" id="form-container">
     <div class="form-page page-visible" id="page-1">
@@ -420,22 +439,22 @@
           </div>
 
           <div class="form-group">
-            <label for="bankname">ბანკი:</label>
-            <select name="currency" id="currency" required>
-              <option value="თიბისი" disabled selected>TBC</option>
+            <label for="bank_name">ბანკი:</label>
+            <select name="bank_name" id="bank_name" required>
+              <option value="TBC" selected>TBC</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="currency">ვალუტა:</label>
             <select name="currency" id="currency" required>
-              <option value="დოლარი" disabled selected>USD</option>
+              <option value="USD" selected>USD</option>
             </select>
           </div>
 
           <div style="display: flex; justify-content: center; margin-top: 20px;">
             <button type="submit"
-              style="background-color: #4CAF50; font-style: italic; font-weight: bold; color: white; padding: 10px 20px; max-width: 50%; border: none; border-radius: 5px;">
+              style="background-color: #4CAF50; font-style: italic; font-weight: bold; color: white; padding: 10px 20px; max-width: 50%; border: none; border-radius: 5px; cursor: pointer;">
               გაგზავნა!
             </button>
           </div>
