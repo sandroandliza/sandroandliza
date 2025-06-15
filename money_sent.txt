@@ -1,1 +1,1 @@
-money_sent=false
+money_sent=true
